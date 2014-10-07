@@ -89,42 +89,23 @@ private:
     static const unsigned long long M = (1ULL << B) - 1;
 };
 
-void
-test_bigint() {
-    BigInt<4> b;
-    b = 0xc0000000UL;
-    b.dump();
-    b += 0xe0000088UL;
-    b.dump();
-    b -= 0x1000UL;
-    b.dump();
-    b *= 0x80007000UL;
-    b.dump();
-    b /= 0x80007000UL;
-    b.dump();
-    b = b % 0x10000UL;
-    b.dump();
-    printf("%d\n", b.iszero());
-    b = 0;
-    b.dump();
-    printf("%d\n", b.iszero());
-}
-
 unsigned int
 powmod(unsigned int cc, unsigned int k, unsigned int n) {
-    unsigned long long tmp = cc % n;
-    for(unsigned int Li = 1; Li < k; ++Li){
-        // printf("\rPROGRESS:%u:%u: <powmod>", k - 1, Li);
-        tmp = (tmp * cc) % n;
+    unsigned int s = k;
+    unsigned long long tmp = cc;
+    unsigned long long ans = 1;
+    while(s){
+        if(s & 1){
+            ans = (ans * tmp) % n;
+        }
+        s >>= 1;
+        tmp = tmp * tmp % n;
     }
-    // printf("\rpowmod: %x\n", tmp);
-    return tmp;
+    return ans;
 }
 
 int
 main(int, const char**) {
-    // test_bigint();
-
     const unsigned int N = 0xfa9ecbbfUL;
     const unsigned int K = 0x10001UL;
     const unsigned int U = 0xda17e869UL;
