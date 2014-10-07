@@ -57,28 +57,22 @@ def main():
         origin_number = origin_number * 256 + cc
     print(' origin_number: %.3f %x' % (log2(origin_number) / 32, origin_number))
     
-    tmp = []
+    encrypt_number = 0
     num = origin_number
     while num > 0:
         d = num % N
         dd = pow(d, U, N)
         num //= N
-        tmp.append(dd)
-    encrypt_number = 0
-    for cc in reversed(tmp):
-        encrypt_number = encrypt_number * N + cc
+        encrypt_number = encrypt_number * N + dd
     print('encrypt_number: %.3f %x' % (log2(encrypt_number) / 32, encrypt_number))
     
-    tmp = []
+    decrypt_number = 0
     num = encrypt_number
     while num > 0:
         d = num % N
         dd = pow(d, K, N)
         num //= N
-        tmp.append(dd)
-    decrypt_number = 0
-    for cc in reversed(tmp):
-        decrypt_number = decrypt_number * N + cc
+        decrypt_number = decrypt_number * N + dd
     print('decrypt_number: %.3f %x' % (log2(decrypt_number) / 32, decrypt_number))
 
 if __name__ == '__main__':
