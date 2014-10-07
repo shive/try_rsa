@@ -1,0 +1,8 @@
+.*
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.suo
+
+!.git*
